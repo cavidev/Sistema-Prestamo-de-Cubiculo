@@ -1,0 +1,27 @@
+{
+    "name": "servidor_web_en_node",
+    "version": "1.0.0",
+    "description": "Ejemplo de un servidor WEB en node, con los 3 modulos o logicas de acceso.",
+    "main": "server.js",
+    "dependencies": {
+        "body-parser": "^1.18.2",
+        "express": "^4.16.2",
+        "tedious": "1.14.0",
+        "mongodb": "^2.2.33"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server.js"
+    },
+    "author": "Carlos Mario Villafuerte Díaz",
+    "license": "ISC",
+    "keywords": [
+        "servidor",
+        "node",
+        "comunidad",
+        "movil",
+        "ejemplo",
+        "servidor"
+    ]
+}
