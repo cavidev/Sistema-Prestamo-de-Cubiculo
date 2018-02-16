@@ -22,7 +22,8 @@
     'ui.router',
 
     'BlurAdmin.pages.dashboard',
-    'BlurAdmin.pages.estudiante'
+    'BlurAdmin.pages.student',
+    'BlurAdmin.pages.profile'
   ])
       .config(routeConfig);
 

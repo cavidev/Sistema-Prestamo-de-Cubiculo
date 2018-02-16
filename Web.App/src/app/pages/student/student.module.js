@@ -3,9 +3,11 @@
  * created on 08.02.2018
  */
 (function () {
-    'use strict';
+  'use strict';
   
-    angular.module('BlurAdmin.pages.estudiante', [])
+    angular.module('BlurAdmin.pages.student', [
+      'ui.select',
+      'ngSanitize'])
         .config(routeConfig);
   
     /** @ngInject */
@@ -22,11 +24,21 @@
           },
         })
         .state('estudiante.agregar', {
-          url: '/estudiante_agregar',
-          templateUrl: 'app/pages/estudiante/agregar/agregar.html',
-          controller: 'AgregarEstudianteCtrl',
-          controllerAs: 'agregarEstudiante',
+          url: '/agregar_nuevo_estudiante',
+          templateUrl: 'app/pages/student/add/addStudentView.html',
+          controller: 'AddStudentCtrl',
+          controllerAs: 'addStudent',
           title: 'Agregar',
+          sidebarMeta: {
+            order: 0,
+          },
+        })
+        .state('estudiante.actualizar', {
+          url: '/actualizar_estudiante',
+          templateUrl: 'app/pages/student/update/updateView.html',
+          controller: 'UpdateStudentCtrl',
+          controllerAs: 'updateStudent',
+          title: 'Actualizar',
           sidebarMeta: {
             order: 0,
           },

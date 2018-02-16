@@ -1,0 +1,104 @@
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <div
+                ba-panel
+                ba-panel-title="Actualizar Estudiante"
+                ba-panel-class="with-scroll">
+            <form>
+                <div class="row form-group">
+                    <div class="col-md-4" >
+                        <label for="input01">Carnet</label>
+                        <input type="number" required="required"
+                            class="form-control"
+                            ng-model="updateStudent.dateStudent.carnet"
+                            id="input01" placeholder="ejemplo: 2018023...">
+                    </div>
+
+                    <div class="col-md-4" >
+                        <label for="input02">Cédula</label>
+                        <input type="number" required="required"
+                            class="form-control"
+                            ng-model="updateStudent.dateStudent.identification"
+                            id="input02" placeholder="cédula nacional: ">
+                    </div>
+
+                    <div class="col-md-4" >
+                        <label for="input03">Género</label>
+                        <ui-select ng-model="updateStudent.dateStudent.gender"
+                                    class="btn-group bootstrap-select form-control"
+                                    ng-disabled="false"
+                                    append-to-body="true"
+                                    search-enabled="false">
+                            <ui-select-match placeholder="">
+                            <span> {{$select.selected.label}}</span>
+                            </ui-select-match>
+                            <ui-select-choices repeat="standardItem in updateStudent.gender | filter: $select.search">
+                            <span ng-bind-html="standardItem.label"></span>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-md-4" >
+                        <label for="input04">Primer nombre</label>
+                        <input type="text"
+                            class="form-control"
+                            ng-model="updateStudent.dateStudent.firtName"
+                            id="input04"
+                            placeholder="">
+
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <label for="input05">Segundo nombre</label>
+                        <input type="text" class="form-control"
+                        ng-model="updateStudent.dateStudent.secondName" id="input05" placeholder="">
+                    </div>
+
+                    <div class="col-md-4" >
+                        <label for="input06">Primer apellido</label>
+                        <input type="text" class="form-control"
+                        ng-model="updateStudent.dateStudent.firtLastName" id="input06" placeholder="">
+                    </div>
+                </div>
+                
+                <div class="row form-group">					
+                    <div class="col-md-4" >
+                        <label for="input07">Segundo apellido</label>
+                        <input type="text" class="form-control" ng-model="updateStudent.dateStudent.secondLastName" id="input07" placeholder="">
+                    </div>
+
+                    <div class="col-md-8" >
+                        <label for="input08">Carrera</label>
+                        <ui-select ng-model="updateStudent.dateStudent.majors"
+                                    class="btn-group bootstrap-select form-control"
+                                    ng-disabled="false"
+                                    append-to-body="true"
+                                    search-enabled="false">
+                            <ui-select-match placeholder="">
+                            <span> {{$select.selected.label}}</span>
+                            </ui-select-match>
+                            <ui-select-choices repeat="standardItem in updateStudent.majors | filter: $select.search">
+                            <span ng-bind-html="standardItem.label"></span>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>							
+
+                <div class="row form-group">
+                    <div class="col-md-8" >
+                        <label for="input09">Correo</label>
+                        <input type="text" class="form-control" ng-model="updateStudent.dateStudent.email" id="input09" placeholder="...@gmail.com">
+                    </div>
+
+                    <div class="col-md-4" >
+                        <button style="margin-left: 19%; margin-top: 12.5%" type="button" id="input10"
+                        ng-click="updateStudent.registerNewStudent()"
+                        class="btn btn btn-warning btn-with-icon"><i class="ion-android-check"></i>Agregar</button>
+                    </div>
+                </div>				
+            </form>		
+        </div>
+    </div>
+</div>
