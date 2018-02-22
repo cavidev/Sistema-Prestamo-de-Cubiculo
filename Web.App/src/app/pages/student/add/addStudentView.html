@@ -1,108 +1,106 @@
 <div class="row"></div>
 	<div class="col-md-6 col-md-offset-3">
-			<div></div>
-		<div
-			  ba-panel
-			  ba-panel-title="Agregar Estudiante"
-			  ba-panel-class="with-scroll">
-			  
-			<form>
-				<div class="row form-group">
-					<div class="col-md-4" >
-						<label for="input01">Carnet</label>
-						<input type="number" required="required"
-							class="form-control"
-							ng-model="addStudent.dateStudent.carnet"
-							id="input01" placeholder="ejemplo: 2018023...">
+		<div class="panel panel-success bootstrap-panel">
+			<div class="panel-heading">AGREGAR ESTUDIANTE</div>
+			<div class="panel-body">
+				<form>
+					<div class="row form-group">
+						<div class="col-md-4" >
+							<label for="addStudentInput01">Carnet</label>
+							<input type="number" required="required"
+								class="form-control"
+								ng-model="addStudent.dateStudent.carnet"
+								id="addStudentInput01" placeholder="ejemplo: 2018023...">
+						</div>
+	
+						<div class="col-md-4" >
+							<label for="addStudentInput02">Cédula</label>
+							<input type="number" required="required"
+								class="form-control"
+								ng-model="addStudent.dateStudent.identification"
+								id="addStudentInput02" placeholder="cédula nacional: ">
+						</div>
+	
+						<div class="col-md-4" >
+							<label for="addStudentInput03">Género</label>
+							<ui-select ng-model="addStudent.dateStudent.gender"
+										class="btn-group bootstrap-select form-control"
+										ng-disabled="false"
+										append-to-body="true"
+										search-enabled="false">
+								<ui-select-match placeholder="">
+								<span> {{$select.selected.label}}</span>
+								</ui-select-match>
+								<ui-select-choices repeat="standardItem in addStudent.gender | filter: $select.search">
+								<span ng-bind-html="standardItem.label"></span>
+								</ui-select-choices>
+							</ui-select>
+						</div>
 					</div>
-
-					<div class="col-md-4" >
-						<label for="input02">Cédula</label>
-						<input type="number" required="required"
-							class="form-control"
-							ng-model="addStudent.dateStudent.identification"
-							id="input02" placeholder="cédula nacional: ">
-					</div>
-
-					<div class="col-md-4" >
-						<label for="input03">Género</label>
-						<ui-select ng-model="addStudent.dateStudent.gender"
-									class="btn-group bootstrap-select form-control"
-									ng-disabled="false"
-									append-to-body="true"
-									search-enabled="false">
-							<ui-select-match placeholder="">
-							<span> {{$select.selected.label}}</span>
-							</ui-select-match>
-							<ui-select-choices repeat="standardItem in addStudent.gender | filter: $select.search">
-							<span ng-bind-html="standardItem.label"></span>
-							</ui-select-choices>
-						</ui-select>
-					</div>
-				</div>
-
-				<div class="row form-group">
-					<div class="col-md-4" >
-						<label for="input04">Primer nombre</label>
-						<input type="text"
-							class="form-control"
-							ng-model="addStudent.dateStudent.firtName"
-							id="input04"
-							placeholder="">
-
+	
+					<div class="row form-group">
+						<div class="col-md-4" >
+							<label for="addStudentInput04">Primer nombre</label>
+							<input type="text"
+								class="form-control"
+								ng-model="addStudent.dateStudent.firtName"
+								id="addStudentInput04"
+								placeholder="">
+	
+						</div>
+						
+						<div class="col-md-4">
+							<label for="addStudentInput05">Segundo nombre</label>
+							<input type="text" class="form-control"
+							ng-model="addStudent.dateStudent.secondName" id="addStudentInput05" placeholder="">
+						</div>
+	
+						<div class="col-md-4" >
+							<label for="addStudentInput06">Primer apellido</label>
+							<input type="text" class="form-control"
+							ng-model="addStudent.dateStudent.firtLastName" id="addStudentInput06" placeholder="">
+						</div>
 					</div>
 					
-					<div class="col-md-4">
-						<label for="input05">Segundo nombre</label>
-						<input type="text" class="form-control"
-						ng-model="addStudent.dateStudent.secondName" id="input05" placeholder="">
-					</div>
+					<div class="row form-group">					
+						<div class="col-md-4" >
+							<label for="addStudentInput07">Segundo apellido</label>
+							<input type="text" class="form-control" ng-model="addStudent.dateStudent.secondLastName" id="addStudentInput07" placeholder="">
+						</div>
+	
+						<div class="col-md-8" >
+							<label for="addStudentInput08">Carrera</label>
+							<ui-select ng-model="addStudent.dateStudent.majors"
+										class="btn-group bootstrap-select form-control"
+										ng-disabled="false"
+										append-to-body="true"
+										search-enabled="false">
+								<ui-select-match placeholder="">
+								<span> {{$select.selected.label}}</span>
+								</ui-select-match>
+								<ui-select-choices repeat="standardItem in addStudent.majors | filter: $select.search">
+								<span ng-bind-html="standardItem.label"></span>
+								</ui-select-choices>
+							</ui-select>
+						</div>
+					</div>							
+	
+					<div class="row form-group">
+						<div class="col-md-8" >
+							<label for="addStudentInput09">Correo</label>
+							<input type="text" class="form-control" ng-model="addStudent.dateStudent.email" id="addStudentInput09" placeholder="...@gmail.com">
+						</div>
+	
+						<div class="col-md-4" >
+							<button style="margin-left: 10%; margin-top: 12.5%"
+							type="button" ng-click="addStudent.registerNewStudent()"
+							class="btn btn-success btn-with-icon"><i class="ion-android-checkmark-circle"></i>Agregar</button>
 
-					<div class="col-md-4" >
-						<label for="input06">Primer apellido</label>
-						<input type="text" class="form-control"
-						ng-model="addStudent.dateStudent.firtLastName" id="input06" placeholder="">
-					</div>
-				</div>
-				
-				<div class="row form-group">					
-					<div class="col-md-4" >
-						<label for="input07">Segundo apellido</label>
-						<input type="text" class="form-control" ng-model="addStudent.dateStudent.secondLastName" id="input07" placeholder="">
-					</div>
-
-					<div class="col-md-8" >
-						<label for="input08">Carrera</label>
-						<ui-select ng-model="addStudent.dateStudent.majors"
-									class="btn-group bootstrap-select form-control"
-									ng-disabled="false"
-									append-to-body="true"
-									search-enabled="false">
-							<ui-select-match placeholder="">
-							<span> {{$select.selected.label}}</span>
-							</ui-select-match>
-							<ui-select-choices repeat="standardItem in addStudent.majors | filter: $select.search">
-							<span ng-bind-html="standardItem.label"></span>
-							</ui-select-choices>
-						</ui-select>
-					</div>
-				</div>							
-
-				<div class="row form-group">
-					<div class="col-md-8" >
-						<label for="input09">Correo</label>
-						<input type="text" class="form-control" ng-model="addStudent.dateStudent.email" id="input09" placeholder="...@gmail.com">
-					</div>
-
-					<div class="col-md-4" >
-						<button style="margin-left: 10%; margin-top: 12.5%" type="button" id="input10"
-						ng-click="addStudent.registerNewStudent()"
-						class="btn btn-primary btn-with-icon"><i class="ion-android-add"></i>Agregar</button>
-
-						<button style="margin-top: 14%" type="button" class="btn btn-default btn-xs" ng-click="addStudent.deleteInfomationStudent()">Limpiar</button>
-					</div>
-				</div>				
-			</form>		
+							<button style="margin-top: 14%" type="button" class="btn btn-default btn-xs" ng-click="addStudent.deleteInfomationStudent()">Limpiar</button>
+						</div>
+					</div>				
+				</form>	
+			</div>	
 		</div>
 	</div>
 </div>

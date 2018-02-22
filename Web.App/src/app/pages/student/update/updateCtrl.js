@@ -9,14 +9,14 @@
         .controller('UpdateStudentCtrl', ActualizarEstudianteCtrl);
   
     /** @ngInject */
-    function ActualizarEstudianteCtrl($scope, registerService) {
+    function ActualizarEstudianteCtrl($scope, studentService) {
      var vm = this;
      vm.gender = [
         {label: 'Masculino', value: 0},
         {label: 'Femenino', value: 1}
     ];
 
-    vm.majors = registerService.getMajors();
+    vm.majors = studentService.getMajors();
 
     vm.dateStudent = {
                 carnet: undefined,

@@ -2,7 +2,7 @@
     'use strict';
     angular
         .module('BlurAdmin.pages.student') 
-        .factory('registerService', 
+        .factory('studentService', 
             function(requestService) {
 
                 var typeOfUsers = [

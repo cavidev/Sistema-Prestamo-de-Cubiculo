@@ -9,7 +9,7 @@
         .controller('AddStudentCtrl', AddStudentCtrl);
   
     /** @ngInject */
-    function AddStudentCtrl($scope, registerService, toastr) {
+    function AddStudentCtrl($scope, studentService, toastr) {
 		var vm = this;
 	
 		vm.disabled = undefined;
@@ -18,7 +18,7 @@
 			{label: 'Femenino', value: 1}
 		];
 
-		vm.majors = registerService.getMajors();
+		vm.majors = studentService.getMajors();
 
 		vm.dateStudent = {
 					carnet: undefined,
@@ -37,7 +37,7 @@
 		 * 
 		 */
 		vm.registerNewStudent = function registerNewStudent() {
-			registerService.registerNewUser(vm.dateStudent, function(res) 
+			studentService.registerNewUser(vm.dateStudent, function(res) 
 			{
 				console.log(res);
 				toastr.success(res.message.text, res.message.tittle, {

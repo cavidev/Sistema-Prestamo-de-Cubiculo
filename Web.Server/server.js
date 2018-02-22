@@ -1,5 +1,5 @@
 //Controlador: Carpeta que contiene todos los controladores de los modulos
-var controlador_NombreModulo_ = require('./Controlador/controlador(NombreModulo).js');
+var userCtrl = require('./Controlador/userCtrl.js');
 
 
 /****************************************************************/
@@ -8,17 +8,21 @@ var bodyParser = require('body-parser');
 var express = require('express'),
     app = express(),
     server = require('http').createServer(app),
-    port = 8080;
+    port = 9002;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //Se direccionan las vistas. EL mismos server levanta las vistas, para el caso de AngularJs.
-app.use('/', express.static(__dirname + '/../Web.App'));
-
+//app.use('/', express.static(__dirname + '/../Web.App'));
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 /****************************************************************/
 //Inicio de las direcciones. Endpoints!
-app.get('/peticion_Escribir_el_nombre_de_la_peticion_', controlador_NombreModulo_.peticion);
+app.post('/registerNewUser', userCtrl.registerNewUser);
 //La peticion es lo que se necesita del servidor ejemplo: getUsuario o doLogin.
 
 

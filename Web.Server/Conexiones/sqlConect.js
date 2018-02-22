@@ -4,11 +4,11 @@ var Connection = require('tedious').Connection;
 -- Cambiar esto por la configuraciones del servidor en producción
 */
 var config = {
-    userName: '',
-    password: '',
-    server: '',
+    userName: 'sa',
+    password: 'ezequiel',
+    server: '172.24.17.14',
     options: {
-        database: '',
+        database: 'SAC-TEC_BIBLIOTECA',
         driver: 'SQL Server Native Client 11.0',
         rowCollectionOnDone: true
     }
@@ -34,55 +34,50 @@ connection.on('connect', function(err) {
  * @param {Request} request
  * @param {function} callback
  */
-exports.executeRequest = function executeRequest(request, callback) {
+exports.callProcedure = function callProcedure(request, callback) {
     'use strict';
-    var res = [],
-        connection = new Connection(config);
+    var res = [];
+    var connection = new Connection(config);
 
     connection.on('connect', function(err) {
         if (err) {
             callback({
                 success: false,
                 data: err.message,
-                error: SIN_CONEXION,
-
+                message: err.code
             });
             return;
         }
 
         request.on('row', function(columns) {
-            var row = {};
+            var row = [];
             columns.forEach(function(column) {
                 if (column.value === null) {
                     console.log('NULL');
                 } else {
-                    row[column.metadata.colName] = column.value;
-
+                    row.push(column.value);
                 }
             });
             res.push(row);
         });
-        request.on('done', function(rowCount, more, rows) {
-
-        });
 
         request.on('returnValue', function(parameterName, value, metadata) {
             connection.close();
-            if (parameterName === 'iStatus' && value === 0) {
+            if (parameterName == 'iStatus' && value == 0) {
                 callback({
                     success: true,
                     data: res,
-                    error: 200
+                    message: 200
                 });
-            } else if (parameterName === 'iStatus') {
+            } else if (parameterName == 'iStatus') {
                 callback({
                     success: false,
-                    data: res,
-                    error: 400
+                    data: null,
+                    message: 400
                 });
             }
         });
-        connection.execSql(request);
+        connection.callProcedure(request);
     });
 };
 
@@ -91,7 +86,7 @@ exports.executeRequest = function executeRequest(request, callback) {
  *
  * @param {Request} request
  * @param {function} callback
- */
+
 exports.callProcedure = function callProcedure(request, callback) {
     'use strict';
     var res = [],
@@ -142,3 +137,4 @@ exports.callProcedure = function callProcedure(request, callback) {
         connection.callProcedure(request);
     });
 };
+ */

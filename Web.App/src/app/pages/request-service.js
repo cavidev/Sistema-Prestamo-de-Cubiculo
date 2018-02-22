@@ -11,9 +11,9 @@
 
 angular.module('BlurAdmin.pages')
 .factory('requestService', function ($http) {
-    //var url = 'http://169.254.82.137:8081'
+    var url = 'http://169.254.82.137:8081'
     //TODO: Averiguar si el servidor de la biblioteca puede acceder a las rutas 3000, 3001, 3002 
-    var url = 'http://172.24.41.238:9002'
+    //var url = 'http://172.24.41.238:9002'
     return {
       getRequest: function (data, configs) {
         return $http(

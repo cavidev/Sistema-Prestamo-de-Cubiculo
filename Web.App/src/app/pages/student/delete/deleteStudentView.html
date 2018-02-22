@@ -1,0 +1,171 @@
+<div class="row" >
+    <div class="col-md-12">
+        <div class="col-md-4" >
+            <label for="input01">Buscar: </label>
+            <div class="input-group">
+                <input type="number"  ng-model="deleteStudent.search"
+                class="form-control with-danger-addon" placeholder="Buscar por carnet...">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"><i class="ion-search" ></i></button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" >
+    <div class="col-md-12">
+        <div class="panel panel-danger bootstrap-panel">
+            <div class="panel-heading">ELIMINAR ESTUDIANTE</div>
+            <div class="panel-body">
+                <form>
+                    <div class="row form-group">
+                        <div class="col-md-2" >
+                            <label for="addStudentInput01">Carnet: </label>
+                            <br>
+                            <div>
+                                &nbsp;&nbsp;<label class="bold-text"><p> {{deleteStudent.studentToDelete.carnet}}</p> </label>
+                            </div>
+                        </div>
+    
+                        <div class="col-md-2" >
+                            <label for="addStudentInput02">Cédula</label>
+                            <div>
+                                <label for=""><p> {{deleteStudent.studentToDelete.identification}}</p></label>
+                            </div>
+                        </div>
+    
+                        <div class="col-md-2" >
+                            <label for="addStudentInput03">Género: </label>
+                            <div>
+                                <label for=""> <p>{{deleteStudent.studentToDelete.gender}}</p></label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2" >
+                            <label for="addStudentInput04">Primer nombre: </label>
+                            <div>
+                                <label for=""><p> {{deleteStudent.studentToDelete.firstName}}</p></label>
+                            </div>
+    
+                        </div>
+
+                        <div class="col-md-2">
+                            <label for="addStudentInput05">Segundo nombre</label>
+                            <div>
+                                <label for=""><p> {{deleteStudent.studentToDelete.secondName}}</p></label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2" >
+                            <label for="addStudentInput06">Primer apellido</label>
+                            <div>
+                                <label for=""><p>{{deleteStudent.studentToDelete.firstLastName}}</p></label>
+                            </div>
+                        </div>
+
+                    </div>
+    
+                    <div class="row form-group">					
+                        <div class="col-md-2" >
+                            <label for="addStudentInput07">Segundo apellido</label>
+                            <div>
+                                <label for=""><p> {{deleteStudent.studentToDelete.secondLastName}}</p></label>
+                            </div>
+                        </div>
+    
+                        <div class="col-md-4" >
+                            <label for="addStudentInput08">Carrera</label>
+                            <div>
+                                <label for=""><p> {{deleteStudent.studentToDelete.majors}}</p></label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4" >
+                            <label for="addStudentInput09">Correo</label>
+                            <div>
+                                <label for=""><p> {{deleteStudent.studentToDelete.email}}</p></label>
+                            </div>
+                        </div>
+                        <div class="col-md-2" >
+                            <button type="button"  style="margin-left: 10%; margin-top: 12.5%"
+                            ng-click="addStudent.registerNewStudent()"
+                            class="btn btn-danger btn-with-icon"><i class="ion-nuclear"></i>Eliminar</button>
+
+                            <button style="margin-top: 14%" type="button" class="btn btn-default btn-xs" ng-click="addStudent.deleteInfomationStudent()">Limpiar</button>
+                        </div>
+                    </div>										
+                </form>	
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div ba-panel ba-panel-title="Todos los estudiantes registrados en la base de datos" ba-panel-class="with-scroll">
+            <div class="horizontal-scroll">
+                <div class="form-group select-page-size-wrap ">
+                    <label>Filas por página<select class="form-control selectpicker show-tick"
+                        title="Filas por pagina" selectpicker
+                        ng-model="deleteStudent.smartTablePageSize"
+                        ng-options="i for i in [5, 10, 15, 20, 25]">
+                        </select>
+                    </label>
+                </div>
+                <table class="table" st-table="deleteStudent.allStudent">
+                    <thead>
+                        <tr class="sortable ">
+                            <th class="table-id" st-sort="id" st-sort-default="true">#</th>
+                            <th st-sort="firstName">Primer Nombre</th>
+                            <th st-sort="lastName">Apellido</th>
+                            <th st-sort="carnet">Carnet</th>
+                            <th st-sort="identification">Cédula</th>
+                            <th st-sort="email">Correo</th>
+                            <th st-sort="email">Acción</th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th>
+                                <input st-search="firstName" placeholder="Buscar nombre" class="input-sm form-control search-input"
+                                        type="search"/></th>
+                            <th>
+                                <input st-search="lastName" placeholder="Buscar apellido" class="input-sm form-control search-input"
+                                        type="search"/></th>
+                            <th>
+                                <input st-search="carnet" placeholder="Buscar carnet" class="input-sm form-control search-input"
+                                        type="search"/></th>
+                            <th>   
+                                <input st-search="identification" placeholder="Buscar cédula" class="input-sm form-control search-input" type="search"/>
+                            </th>
+                            <th>
+                                <input st-search="email" placeholder="Buscar correo" class="input-sm form-control search-input" type="search"/>
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in deleteStudent.allStudent">
+                            <td class="table-id">{{item.id}}</td>
+                            <td>{{item.firstName}}</td>
+                            <td>{{item.firstLastName}}</td>
+                            <td>{{item.carnet}}</td>
+                            <td>{{item.identification}}</td>
+                            <td><a class="email-link" ng-href="mailto:{{item.email}}">{{item.email}}</a></td>
+                            <td>
+                                <a ng-click="deleteStudent.loadDataStudent(item)" >Cargar</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                        <td colspan="6" class="text-center">
+                            <div st-pagination="" st-items-by-page="deleteStudent.smartTablePageSize" st-displayed-pages="5"></div>
+                        </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

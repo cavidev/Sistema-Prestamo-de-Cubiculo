@@ -43,5 +43,15 @@
             order: 0,
           },
         })
+        .state('estudiante.eliminar', {
+          url: '/eliminar_estudiante',
+          templateUrl: 'app/pages/student/delete/deleteStudentView.html',
+          controller: 'DeleteStudentCtrl',
+          controllerAs: 'deleteStudent',
+          title: 'Eliminar',
+          sidebarMeta: {
+            order: 0,
+          },
+        })
     }
   })();

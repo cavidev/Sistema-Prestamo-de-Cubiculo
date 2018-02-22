@@ -5,7 +5,7 @@ var readJsonFile = function() {
     // Se lee el archivo de configuración de la base de datos
     //Direccion de donde se encuentra el docuemnto dbConfiguration.json, 
     //por cuestiones de windows 10 la direccion se escribe con doble \\ 
-    var connectionParams = fs.readFileSync('C:\\');
+    var connectionParams = fs.readFileSync('C:\\Users\\dell\\Documents\\@Aplicaciones Web _Node_\\Proyecto Biblioteca\\Sistema Prestamo de Cubiculo\\Sistema Prestamo de Cubiculo -App\\Web.Server\\Conexiones\\dbConfiguration.json');
     //
     var dbConfig = {}
     try {
