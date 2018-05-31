@@ -1,79 +1,147 @@
 var studentConnection = require('../ConexionBDs/studentConnection.js');
 var userRepository = require('../ConexionBDs/userRepository.js');
 
+/**
+ * Pide a la base de datos todos los estudiates registrados hasta el momento.
+ * 
+ * @param {JSON} data En este caso null ó ''
+ * @param {function} callback Donde se devuelven los datos.
+ */
+exports.getStudents = function getStudents(data, callback) {
+    studentConnection.GETSTUDENTS(data, (res) => {
+        callback(res);
+    });
+
+}
+
 exports.registerStudent = function registerStudent(data, callback) {
     //Verifica si hay un usuario con la misma cedula
-    userRepository.getUserById({ _userId: data.identification }, function(res) {
+    userRepository.getUserById({
+        _userId: data.identification
+    }, (res) => {
         if (res.success) {
-            if ((res.data) == null) { 
+            if ((res.data) == null) {
                 //Verifica si hay un usuario con el mismo carnet.
-                userRepository.getStudentById({ _studentId: data.carnet }, function(res) {
+                userRepository.getStudentById({
+                    _studentId: data.carnet
+                }, (res) => {
                     if (res.success) {
                         if ((res.data) == null) {
-                            data._visits = 0;
-                            data._role = 'Visita';
-                            //TODO: MODIFICAR EL DATA PARA QUE LO RECIBA MONGO...
-                            userRepository.addUser(data, function(res) {
+                            userRepository.addUser(generateDocumentToMongo(data), (res) => {
                                 if (res.success) {
-                                    studentConnection.DVBBESTUDIANTES_Insertar(data, function(res) {
-                                        if (!res.success) {
+                                    studentConnection.DVBBESTUDIANTES_Insertar(data, (res) => {
+                                        var eventWithConnectionSQLServer = res;
+                                        if (eventWithConnectionSQLServer.success) {
                                             callback({
-                                                success:false,
-                                                message: {text: 'Ocurrio un error en la conexión con la base de datos, por favor intentelo nuevamente', tittle: 'Error!'},
-                                                type: 'warning',
-                                                error: 200
+                                                success: true,
+                                                data: eventWithConnectionsMongoDBs.data,
+                                                message: {
+                                                    title: '¡Inserción Completa!',
+                                                    text: 'Los datos se insertaron correctamente, ahora puede iniciar sesión y disfrutar de los servicios de la biblioteca.'
+                                                }
                                             });
                                         } else {
-                                            if (res.data[0][0] === 'El carné ya existe') {
-                                                callback({
-                                                    success:false,
-                                                    message: {text: 'El carné ya existe', tittle: 'Error!'},
-                                                    type: 'error',
-                                                    error: 200
-                                                });
-                                            } 
+                                            /**
+                                             * Cuando falla la insercion en SQL Server se elimina de MongoDB el resgistro recien agregado.
+                                             */
+                                            userRepository.deleteUser(generateDocumentToMongo(data), (res) => {
+                                                var eventWithConnectionsMongoDBs = res;
+                                                if (eventWithConnectionsMongoDBs.success) {
+                                                    callback({
+                                                        success: false,
+                                                        message: {
+                                                            title: 'Error!',
+                                                            text: 'No se pudo insertar el usuario en la base de datos intentelo de nuevo. jajaja'
+                                                        },
+                                                        type: 'error'
+                                                    });
+                                                } else {
+                                                    callback({
+                                                        success: false,
+                                                        title: eventWithConnectionSQLServer.message,
+                                                        message: {
+                                                            title: 'Error!',
+                                                            text: 'No se pudieron ingresar los datos al sistema por falta de conexion con la base de datos,' +
+                                                                ' y tampoco se pudieron eliminar los rastros de estos, por favor verificar la entrada al sistema y comunicar el error al personal de la biblioteca.'
+                                                        },
+                                                        type: 'error'
+                                                    });
+                                                }
+                                            });
                                         }
-                                    });
+                                    })
                                 } else {
-                                    callback(res);
+                                    callback({
+                                        success: false,
+                                        message: {
+                                            text: 'Se perdio la conexión con la Base de Datos.',
+                                            tittle: 'Perdida de conexión!'
+                                        },
+                                        type: 'error',
+                                        error: 200
+                                    })
                                 }
-                            })
+                            });
                         } else {
                             callback({
-                                success:false,
-                                message: {text: 'Ya existe un usuario registrado con ese carnet en una de la bases de datos, acérquese a ventanilla para el respectivo registro', tittle: 'Peligro!'},
+                                success: false,
+                                message: {
+                                    text: 'Ya existe un usuario registrado con ese carnet',
+                                    tittle: 'Peligro!'
+                                },
                                 type: 'warning',
                                 error: 200
                             });
                         }
                     } else {
                         callback({
-                            success:false,
-                            message: {text: 'El carné ya existe', tittle: 'Error!'},
+                            success: false,
+                            message: {
+                                text: 'Se perdio la conexión con la Base de Datos.',
+                                tittle: 'Perdida de conexión!'
+                            },
                             type: 'error',
-                            error: 200
-                        });
+                            error: 500
+                        })
                     }
-                }); 
+                })
             } else {
                 callback({
-                    success:false,
-                    message: {text: 'Ya existe un usuario registrado con ese número de cédula en una de la bases de datos, acérquese a ventanilla para el respectivo registro', tittle: 'Peligro!'},
+                    success: false,
+                    message: {
+                        text: 'Ya existe un usuario registrado con ese número de cédula.',
+                        tittle: 'Error!'
+                    },
                     type: 'warning',
-                    error: 200
+                    error: 500
                 })
             }
         } else {
-            if (res.data != null) {
-                callback({
-                    success:false,
-                    message: {text: 'Error del sistema: Ha ocurrido un error, por favor intentelo nuevamente. Si el problema persiste contacte al administrador del sistema.', tittle: 'Error!'},
-                    type: 'error',
-                    error: 200
-                })
-            } else {
-                callback(res)
-            }
-        };
+            callback({
+                success: false,
+                message: {
+                    text: 'Se perdio la conexión con la Base de Datos.',
+                    tittle: 'Perdida de conexión!'
+                },
+                type: 'error',
+                error: 500
+            })
+        }
     });
+}
+
+function generateDocumentToMongo(data) {
+    var document;
+    document = {
+        _userId: data.identification,
+        _type: data.majors.label === 'Estudiante Colegio Científico' ? 'Estudiante Colegio Científico' : 'EstudianteTEC',
+        _studentId: data.carnet,
+        _name: data.firstName + ' ' + data.secondName,
+        _lastname: data.firstLastName + ' ' + data.secondLastName,
+        _department: data.majors.label,
+        _sex: data.gender.label,
+        _role: 'Visita',
+        _visits: 0
+    }
+    return document;
 }

@@ -1,5 +1,18 @@
+# Created by https://www.gitignore.io/api/visualstudiocode
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history
+
 Web.App/node_modules
 Web.App/bower_components
 
 .tmp
 *.tmp
+
+
+# End of https://www.gitignore.io/api/visualstudiocode

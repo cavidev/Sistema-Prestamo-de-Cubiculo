@@ -6,7 +6,7 @@ var Connection = require('tedious').Connection;
 var config = {
     userName: 'sa',
     password: 'ezequiel',
-    server: '172.24.17.14',
+    server: '172.24.4.14',
     options: {
         database: 'SAC-TEC_BIBLIOTECA',
         driver: 'SQL Server Native Client 11.0',
@@ -19,14 +19,13 @@ var SIN_CONEXION = 1;
 //Crea la conección, si todo sale bien no tira el mensaje de error en la consola.
 var connection = new Connection(config);
 //Prueba la conexion apenas se ponga en ejecucion el servidor.
-/*
-connection.on('connect', function(err) {
+
+connection.on('connect', function (err) {
     if (err) {
         console.log(err);
     }
-    console.log('se conecto..');
+    console.log('se conecto a SQL Server');
 });
-*/
 
 /**
  * Ejecuta query en la base de datos SQL Server.
@@ -39,7 +38,7 @@ exports.callProcedure = function callProcedure(request, callback) {
     var res = [];
     var connection = new Connection(config);
 
-    connection.on('connect', function(err) {
+    connection.on('connect', function (err) {
         if (err) {
             callback({
                 success: false,
@@ -49,9 +48,9 @@ exports.callProcedure = function callProcedure(request, callback) {
             return;
         }
 
-        request.on('row', function(columns) {
+        request.on('row', function (columns) {
             var row = [];
-            columns.forEach(function(column) {
+            columns.forEach(function (column) {
                 if (column.value === null) {
                     console.log('NULL');
                 } else {
@@ -61,8 +60,12 @@ exports.callProcedure = function callProcedure(request, callback) {
             res.push(row);
         });
 
-        request.on('returnValue', function(parameterName, value, metadata) {
+        request.on('returnValue', function (parameterName, value, metadata) {
             connection.close();
+
+            console.log(parameterName);
+            console.log(value);
+
             if (parameterName == 'iStatus' && value == 0) {
                 callback({
                     success: true,

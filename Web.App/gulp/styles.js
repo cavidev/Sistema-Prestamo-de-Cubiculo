@@ -37,7 +37,9 @@ var buildStyles = function () {
     '!' + path.join(conf.paths.src, '/sass/theme/conf/**/*.scss'),
     '!' + path.join(conf.paths.src, '/sass/404.scss'),
     '!' + path.join(conf.paths.src, '/sass/auth.scss')
-  ], {read: false});
+  ], {
+    read: false
+  });
 
   var injectOptions = {
     transform: function (filePath) {
@@ -50,8 +52,8 @@ var buildStyles = function () {
   };
 
   return gulp.src([
-    path.join(conf.paths.src, '/sass/main.scss')
-  ])
+      path.join(conf.paths.src, '/sass/main.scss')
+    ])
     .pipe($.inject(injectFiles, injectOptions))
     .pipe(wiredep(_.extend({}, conf.wiredep)))
     .pipe($.sourcemaps.init())

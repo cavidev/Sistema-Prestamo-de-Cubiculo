@@ -4,12 +4,12 @@
  */
 (function () {
     'use strict';
-  
+
     angular.module('BlurAdmin.pages.student')
         .controller('DeleteStudentCtrl', DeleteStudentCtrl);
-  
+
     /** @ngInject */
-    function DeleteStudentCtrl($scope, studentService,  $filter, editableOptions, editableThemes) {
+    function DeleteStudentCtrl($scope, studentService, $filter, editableOptions, editableThemes) {
         var vm = this;
         vm.smartTablePageSize = 10;
         editableOptions.theme = 'bs3';
@@ -18,9 +18,8 @@
         vm.studentToDelete = {};
 
 
-
-        vm.allStudent = [
-            {
+        /*
+        vm.allStudent = [{
                 id: 1,
                 firstName: 'Carlos1',
                 secondName: 'Mario',
@@ -116,9 +115,16 @@
                 gender: 'Masculino',
                 majors: 'Ingenieria en Computación'
             }
-        ];
+        ];*/
 
-        vm.loadDataStudent = function loadDataStudent(student){
+        vm.bringAllStudents = function bringAllStudents() {
+            studentService.bringAllStudents(function (res) {
+                console.log(res);
+                vm.allStudent = res.data;
+            });
+        }
+
+        vm.loadDataStudent = function loadDataStudent(student) {
             //new json object here;
             vm.studentToDelete = JSON.parse(JSON.stringify(student));
         }
@@ -127,7 +133,7 @@
 
 function cloneJSON(obj) {
     // basic type deep copy
-    if (obj === null || obj === undefined || typeof obj !== 'object')  {
+    if (obj === null || obj === undefined || typeof obj !== 'object') {
         return obj
     }
     // array deep copy
@@ -135,13 +141,13 @@ function cloneJSON(obj) {
         var cloneA = [];
         for (var i = 0; i < obj.length; ++i) {
             cloneA[i] = cloneJSON(obj[i]);
-        }              
+        }
         return cloneA;
-    }                  
+    }
     // object deep copy
-    var cloneO = {};   
+    var cloneO = {};
     for (var i in obj) {
         cloneO[i] = cloneJSON(obj[i]);
-    }                  
+    }
     return cloneO;
 }
